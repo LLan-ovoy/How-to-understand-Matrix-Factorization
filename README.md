@@ -1,7 +1,8 @@
-# How to understand/implement _________ 🤔
+# How to understand _________ 🤔
 
 
 
 * [Kmeans understanding and its implementation in e-ecommerce](https://llan-ovoy.github.io/How-toooo/Kmeans_ecommerce/)
 
 * [Review of Recommendation System](https://llan-ovoy.github.io/How-toooo/Recommendation_sys/) and some [side topics](https://github.com/LLan-ovoy/How-toooo/tree/main/Recommendation_sys/Side_Topics/)
+
