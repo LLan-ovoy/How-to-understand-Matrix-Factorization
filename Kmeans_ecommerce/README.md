@@ -22,7 +22,7 @@ The outline of this article is:
 
 As I mentioned before, K-means is simple and intuitive. Before showing some math and code, here is a short story to illustrate how Kmeans works. 
 
-![lemonade.jpeg](Latex&image/lemonade.jpeg)
+![lemonade.jpeg](image/lemonade.jpeg)
 
 In a city, there is a popular lemonade shop that has three stands. In the beginning, they randomly picked 3 locations. However, since their locations are randomly picked, some customers need to drive a long way for a cup. While some stand is too far away that nobody goes to. Facing this problem, the three stands are relocated to make sure the current customers of each stand have equal distance. After relation, however, some customers belonging to stand 1 find that stand 2 is even closer and decided to go to stand 2 for lemonade. Again, after each customer rechooses their stands, the unbalanced situation comes again. Thue, these stands relocated again and again based on the distance. Finally, they realized that they don't need to relocate anymore since every customer finds their closest stands.
 
@@ -36,18 +36,6 @@ See, the Mechanism of Kmeans sounds very intuitive. Here are the steps:
 
 
 ```python
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-
-from time import time
-from PIL import Image
-from skimage.io import imread
-
-import re
-import jieba
-import string
-
 %run kmeans
 ```
 
@@ -64,23 +52,8 @@ centroids, labels = kmeans(grades, k=3)
 ```
 
 
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,2))
-ax[0].scatter(grades, np.ones(len(grades)))
-ax[0].set_title('Original data')
-ax[0].set_xlabel('x')
-
-ax[1].scatter(grades, np.ones(len(grades)), c=labels)
-ax[1].scatter(centroids, np.ones(len(centroids)), marker="P", c='orange', s=100)
-ax[1].set_title('Clustered data')
-ax[1].set_xlabel('x')
-plt.show()
-```
-
-
-​    
-![png](output_6_0.png)
-​    
+![png](image/output_6_0.png)
+    
 
 
 The above graph shows the scatter plot of grades data colored by the cluster they belong to. In this example, we choose K = 3. The symbol '+' is the centroid of each cluster. Looks great, isn't it? Let's see how it works in 2D. 
@@ -94,24 +67,8 @@ centroids, labels = kmeans(x, k)
 ```
 
 
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,4))
-ax[0].scatter(x[:,0], x[:,1])
-ax[0].set_title('Original data')
-ax[0].set_xlabel('x_1')
-ax[0].set_ylabel('x_2')
-ax[1].scatter(x[:,0], x[:,1], c=labels)
-ax[1].scatter(centroids[:,0], centroids[:,1], marker="P", c='orange',s=100)
-ax[1].set_title('Clustered data')
-ax[1].set_xlabel('x_1')
-ax[1].set_ylabel('x_2')
-plt.show()
-```
-
-
-​    
-![png](output_9_0.png)
-​    
+![png](image/output_9_0.png)
+    
 
 
 The original data are generated with 5 centers and ambiguous boundaries can be detected. With K=5, the clustered data clearly demonstrated the group pattern. The next plot shows how centroids changes step by step.
@@ -122,20 +79,8 @@ centroids, labels, centroids_list, labels_list, cluster_list = kmeans_steps(x, k
 ```
 
 
-```python
-fig, ax = plt.subplots(1,len(centroids_list),figsize=(20,4))
-ax = ax.flatten()
-for i in range(0, len(centroids_list)): 
-    ax[i].scatter(x[:,0], x[:,1], c=labels_list[i])
-    ax[i].scatter(centroids_list[i][:,0], centroids_list[i][:,1], marker="P", c='orange', s=100)
-    ax[i].set_title('iter_{}'.format(i))
-plt.show()
-```
-
-
-​    
-![png](output_12_0.png)
-​    
+![png](image/output_12_0.png)
+    
 
 
 Since the dataset is considered simple, Kmeans converges in 6 iterations. Actually, after the second iteration, the centroids barely changed.
@@ -148,23 +93,8 @@ in_group, cross_group = in_cross_dist(cluster_list)
 ```
 
 
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,4))
-ax[0].plot(in_group)
-ax[0].set_title('In-cluster distance')
-ax[0].set_xlabel('num_iter')
-ax[0].set_ylabel('distance')
-ax[1].plot(cross_group)
-ax[1].set_title('Cross-cluster distance')
-ax[1].set_xlabel('num_iter')
-ax[1].set_ylabel('distance')
-plt.show()
-```
-
-
-​    
-![png](output_15_0.png)
-​    
+![png](image/output_15_0.png)
+    
 
 
 Clearly, the in-cluster distance or dissimilarity decreases dramatically, and cross-cluster acts in the opposite way. This change consists of what the iteration plots show after iteration 2.  
@@ -191,20 +121,8 @@ img_ = Image.fromarray(centroids[labels].reshape(img.shape), 'L')
     time in sec: 17.4126238822937
 
 
-
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,6))
-ax[0].imshow(img, cmap='gray')
-ax[0].set_title('Original image')
-ax[1].imshow(img_, cmap='gray')
-ax[1].set_title('Compressed image')
-plt.show()
-```
-
-
-​    
-![png](output_19_0.png)
-​    
+![png](image/output_19_0.png)
+    
 
 
 The grayscale picture only has 2 dimensions. With K=8, Different gray colors are grouped into 8 clusters and replaced with each centroid color value.
@@ -225,20 +143,8 @@ img_ = Image.fromarray(centroids[labels].reshape(img.shape))
     time in sec: 132.31976985931396
 
 
-
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,6))
-ax[0].imshow(img)
-ax[0].set_title('Original image')
-ax[1].imshow(img_)
-ax[1].set_title('Compressed image')
-plt.show()
-```
-
-
-​    
-![png](output_22_0.png)
-​    
+![png](image/output_22_0.png)
+    
 
 
 The color photo has 3 dimensions, takes a relatively long time to be processed. Same as before, color vectors are replaced by the centroid of the cluster they belong to.
@@ -261,34 +167,8 @@ centroids3, labels3 = kmeans(x, k)
 ```
 
 
-```python
-fig, ax = plt.subplots(1,3,figsize=(18,4))
-ax[0].scatter(x[:,0], x[:,1], c=labels1)
-ax[0].scatter(centroids1[:,0], centroids1[:,1], marker="P", c='orange', s=100)
-ax[0].set_title('Kmeans clustering result 1')
-ax[0].set_xlabel('x_1')
-ax[0].set_ylabel('x_2')
-
-ax[1].scatter(x[:,0], x[:,1], c=labels2)
-ax[1].scatter(centroids2[:,0], centroids2[:,1], marker="P", c='orange', s=100)
-ax[1].set_title('Kmeans clustering result 2')
-ax[1].set_xlabel('x_1')
-ax[1].set_ylabel('x_2')
-
-
-ax[2].scatter(x[:,0], x[:,1], c=labels3)
-ax[2].scatter(centroids3[:,0], centroids3[:,1], marker="P", c='orange', s=100)
-ax[2].set_title('Kmeans clustering result 3')
-ax[2].set_xlabel('x_1')
-ax[2].set_ylabel('x_2')
-
-plt.show()
-```
-
-
-​    
-![png](output_26_0.png)
-​    
+![png](image/output_26_0.png)
+    
 
 
 From the plot, the right lower corner of each plot has a different number of cluster centroids, which leads to significantly different efficiency of clustering. Usually, because of ambiguous boundaries of data or extremely large datasets, we are lacking criteria for judging how clustering algorithm works, which makes this drawback even worse.
@@ -313,34 +193,8 @@ centroids3, labels3 = kmeans(x, k, 'kmeans++')
 ```
 
 
-```python
-fig, ax = plt.subplots(1,3,figsize=(18,4))
-ax[0].scatter(x[:,0], x[:,1], c=labels1)
-ax[0].scatter(centroids1[:,0], centroids1[:,1], marker="P", c='orange', s=100)
-ax[0].set_title('Kmeans clustering result 1')
-ax[0].set_xlabel('x_1')
-ax[0].set_ylabel('x_2')
-
-ax[1].scatter(x[:,0], x[:,1], c=labels2)
-ax[1].scatter(centroids2[:,0], centroids2[:,1], marker="P", c='orange', s=100)
-ax[1].set_title('Kmeans clustering result 2')
-ax[1].set_xlabel('x_1')
-ax[1].set_ylabel('x_2')
-
-
-ax[2].scatter(x[:,0], x[:,1], c=labels3)
-ax[2].scatter(centroids3[:,0], centroids3[:,1], marker="P", c='orange', s=100)
-ax[2].set_title('Kmeans clustering result 3')
-ax[2].set_xlabel('x_1')
-ax[2].set_ylabel('x_2')
-
-plt.show()
-```
-
-
-​    
-![png](output_29_0.png)
-​    
+![png](image/output_29_0.png)
+    
 
 
 With reselected initial points, the result of K-means becomes stable, though the first random points can still somehow have an effect.
@@ -357,24 +211,8 @@ centroids, labels = kmeans(x_outlier, k, 'kmeans++')
 ```
 
 
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,4))
-ax[0].scatter(x_outlier[:,0], x_outlier[:,1])
-ax[0].set_title('Original data')
-ax[0].set_xlabel('x_1')
-ax[0].set_ylabel('x_2')
-ax[1].scatter(x_outlier[:,0], x_outlier[:,1], c=labels)
-ax[1].scatter(centroids[:,0], centroids[:,1], marker="P", c='orange',s=100)
-ax[1].set_title('Clustered data')
-ax[1].set_xlabel('x_1')
-ax[1].set_ylabel('x_2')
-plt.show()
-```
-
-
-​    
-![png](output_32_0.png)
-​    
+![png](image/output_32_0.png)
+    
 
 
 
@@ -383,25 +221,8 @@ centroids_m, labels_m, _, _, _ = kmedians_steps(x_outlier, k)
 ```
 
 
-```python
-fig, ax = plt.subplots(1,2,figsize=(12,4))
-ax[0].scatter(x_outlier[:,0], x_outlier[:,1], c=labels)
-ax[0].scatter(centroids[:,0], centroids[:,1], marker="P", c='orange',s=100)
-ax[0].set_title('Kmeans clustering result')
-ax[0].set_xlabel('x_1')
-ax[0].set_ylabel('x_2')
-ax[1].scatter(x_outlier[:,0], x_outlier[:,1], c=labels_m)
-ax[1].scatter(centroids_m[:,0], centroids_m[:,1], marker="P", c='orange',s=100)
-ax[1].set_title('Kmedians Clustering result')
-ax[1].set_xlabel('x_1')
-ax[1].set_ylabel('x_2')
-plt.show()
-```
-
-
-​    
-![png](output_34_0.png)
-​    
+![png](image/output_34_0.png)
+    
 
 
 The plots above show the different performances of Kmeans and Kmedians on a data set with 2 outliers. Kmeans will treat the outliers as centroid, which reduces the clustering performance on main data. Kmedians can ignore outliers can maintain an efficient performance on main data.
@@ -415,30 +236,8 @@ kmedoids = KMedoids(n_clusters=5, random_state=0).fit(x_outlier)
 ```
 
 
-```python
-fig, ax = plt.subplots(1,3,figsize=(16,4))
-ax[0].scatter(x_outlier[:,0], x_outlier[:,1], c=labels)
-ax[0].scatter(centroids[:,0], centroids[:,1], marker="P", c='orange',s=100)
-ax[0].set_title('Kmeans clustering result')
-ax[0].set_xlabel('x_1')
-ax[0].set_ylabel('x_2')
-ax[1].scatter(x_outlier[:,0], x_outlier[:,1], c=labels_m)
-ax[1].scatter(centroids_m[:,0], centroids_m[:,1], marker="P", c='orange',s=100)
-ax[1].set_title('Kmedians Clustering result')
-ax[1].set_xlabel('x_1')
-ax[1].set_ylabel('x_2')
-ax[2].scatter(x_outlier[:,0], x_outlier[:,1], c=kmedoids.labels_)
-ax[2].scatter(kmedoids.cluster_centers_[:,0], kmedoids.cluster_centers_[:,1], marker="P", c='orange',s=100)
-ax[2].set_title('Kmedoids clustering result')
-ax[2].set_xlabel('x_1')
-ax[2].set_ylabel('x_2')
-plt.show()
-```
-
-
-​    
-![png](output_37_0.png)
-​    
+![png](image/output_37_0.png)
+    
 
 
 Beyond these two drawbacks, there are also other considerations that can be addressed on the clustering algorithms. For example, the difficulty to evaluate a clustering result given a large data set that cannot be grouped by humans. After clustering, extra efforts need to be spent on extracting cluster attributes to transform them into practical information.
@@ -465,10 +264,10 @@ Since this article is focusing on the K-means cluster, we will skip to the secon
 Unlike exploring an unstructured dataset, a clear description even a specific kind of label is available for each item. To cluster items, we consider the same item type should be clustered together, while the same product type should not be for deduplication.
 
 Here is an example of a good cluster for deduplication, since there are high similarity items.
-![good_cluster.png](Latex&image/good_cluster.png)
+![good_cluster.png](image/good_cluster.png)
 
 While this is not, though they are all canned fruits.
-![bad_cluster.png](Latex&image/bad_cluster.png)
+![bad_cluster.png](image/bad_cluster.png)
 
 ## Features for clustering
 
@@ -489,8 +288,6 @@ d = load_glove()
     Loading Glove...
     Finished loading Glove.
 
-
-
 ```python
 item_name_vector = item_name_vector(item_name[:200], d)
 ```
@@ -508,23 +305,6 @@ result['item_name'] = item_name[:200]
 result[result.label==3]
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-    
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -551,8 +331,6 @@ result[result.label==3]
     </tr>
   </tbody>
 </table>
-</div>
-
 
 
 From the result above, we can see that similarly named items are clustered together, which is a good start for deduplication. Text-based methods rely on text embedding. The number of clusters also affects how accurately certain items are grouped. Besides, other features such as detailed categorical information and features calculated based on customer behavior should also contribute to deduplication purposes.
@@ -564,7 +342,3 @@ In this article, we demonstrated how the K-means algorithm works on 1D, 2D scatt
 When implementing a certain algorithm on a real-world problem, besides the model itself, great efforts should be spent on analyzing the real situation. Clear vision on the result, and then dig into conquering each small problem.
 
 
-
-```python
-
-```
