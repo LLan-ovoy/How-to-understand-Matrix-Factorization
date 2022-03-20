@@ -1,6 +1,6 @@
 # How to understand _________ 🤔
 
-
+> Open the GitHub page [here](https://llan-ovoy.github.io/How-toooo/).
 
 * [Kmeans understanding and its implementation in e-ecommerce](https://llan-ovoy.github.io/How-toooo/Kmeans_ecommerce/)
 
