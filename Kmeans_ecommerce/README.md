@@ -1,4 +1,6 @@
-# Introduction
+# Review of K-means and its application in E-commerce
+
+## Introduction
 
 <p style="font:times">“If intelligence is a cake, the bulk of the cake is unsupervised learning.”</p>
 
@@ -18,7 +20,7 @@ The outline of this article is:
     * Features for clustering
 * Summary
 
-# How does K-means work?
+## How does K-means work?
 
 As I mentioned before, K-means is simple and intuitive. Before showing some math and code, here is a short story to illustrate how Kmeans works. 
 
@@ -39,7 +41,7 @@ See, the Mechanism of Kmeans sounds very intuitive. Here are the steps:
 %run kmeans
 ```
 
-## A taste of Kmeans clustering: 1D and 2D clustering
+### A taste of Kmeans clustering: 1D and 2D clustering
 
 Let's start with a simple 1D example. The situation is that we have 20 students' grades, and we want to divide them into 3 groups. The plots below show the result of K-means, and the orange marks denoted the final centroids. 
 
@@ -99,7 +101,7 @@ in_group, cross_group = in_cross_dist(cluster_list)
 
 Clearly, the in-cluster distance or dissimilarity decreases dramatically, and cross-cluster acts in the opposite way. This change consists of what the iteration plots show after iteration 2.  
 
-## Raise the number of dimensions: Image compression
+### Raise the number of dimensions: Image compression
 
 The clustering idea can also be used on image compression. Kmeans clustering will group similar colors together, and use each cluster's centroid to replace all the color vectors in respective clusters. By applying Kmeans on pixel vectors, the image can be compressed without degrading its quality. 
 
@@ -149,11 +151,12 @@ img_ = Image.fromarray(centroids[labels].reshape(img.shape))
 
 The color photo has 3 dimensions, takes a relatively long time to be processed. Same as before, color vectors are replaced by the centroid of the cluster they belong to.
 
-# Drawbacks of Kmeans and Improvement
+## Drawbacks of Kmeans and Improvement
 
 Viewing how powerful K-means can be, it is also important to know some drawbacks and corresponding improvements.
 
-## For initial points: Kmeans ++
+### For initial points: Kmeans ++
+
 The first drawback is how to pick the initial points. The plots below show how clustering results change with different initial centroids.
 
 
@@ -199,8 +202,7 @@ centroids3, labels3 = kmeans(x, k, 'kmeans++')
 
 With reselected initial points, the result of K-means becomes stable, though the first random points can still somehow have an effect.
 
-
-## For outliers: K-medians and K-medoids
+### For outliers: K-medians and K-medoids
 
 Another obvious drawback of Kmeans is its sensitivity to outliers. This is a common problem for any algorithm that uses the mean values. The solution is also common, which is using the median. The key difference between Kmeans and Kmedians is to replace mean with median when calculating the new centroids.
 
@@ -212,8 +214,6 @@ centroids, labels = kmeans(x_outlier, k, 'kmeans++')
 
 
 ![png](image/output_32_0.png)
-    
-
 
 
 ```python
@@ -242,7 +242,7 @@ kmedoids = KMedoids(n_clusters=5, random_state=0).fit(x_outlier)
 
 Beyond these two drawbacks, there are also other considerations that can be addressed on the clustering algorithms. For example, the difficulty to evaluate a clustering result given a large data set that cannot be grouped by humans. After clustering, extra efforts need to be spent on extracting cluster attributes to transform them into practical information.
 
-# Diversity in Ecommerce with Clustering Algorithm
+## Diversity in Ecommerce with Clustering Algorithm
 
 The author is lucky to work in Walmart Global Tech as a Data Scientist intern. One of the heating topics in my team's scope is diversity in the recommender systems.
 
@@ -258,7 +258,8 @@ There are several things that need to be considered in this process.
 2. What is a proper cluster?
 3. Which one to remove?
 
-## A proper clustered result
+### A proper clustered result
+
 Since this article is focusing on the K-means cluster, we will skip to the second problem.
 
 Unlike exploring an unstructured dataset, a clear description even a specific kind of label is available for each item. To cluster items, we consider the same item type should be clustered together, while the same product type should not be for deduplication.
@@ -269,7 +270,7 @@ Here is an example of a good cluster for deduplication, since there are high sim
 While this is not, though they are all canned fruits.
 ![bad_cluster.png](image/bad_cluster.png)
 
-## Features for clustering
+### Features for clustering
 
 Though human can recognize similar items without effort, e-commerce platform usually doesn't use picture for clustering. Without extra models, item title or description is the main information we can use. 
 
@@ -335,10 +336,9 @@ result[result.label==3]
 
 From the result above, we can see that similarly named items are clustered together, which is a good start for deduplication. Text-based methods rely on text embedding. The number of clusters also affects how accurately certain items are grouped. Besides, other features such as detailed categorical information and features calculated based on customer behavior should also contribute to deduplication purposes.
 
-# Summary
+## Summary
 
 In this article, we demonstrated how the K-means algorithm works on 1D, 2D scatters and its implementation on image compression. We also slightly discussed how cluster algorithms can be used in product diversity on e-commerce platforms.
 
 When implementing a certain algorithm on a real-world problem, besides the model itself, great efforts should be spent on analyzing the real situation. Clear vision on the result, and then dig into conquering each small problem.
-
 
